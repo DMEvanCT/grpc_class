@@ -191,6 +191,7 @@ func BiderStreaming(c greetpb.GreetServiceClient) {
 
 
 	go func() {
+		defer close(waitc)
 		for {
 			resp, err := stream.Recv()
 			if err == io.EOF {
@@ -203,7 +204,6 @@ func BiderStreaming(c greetpb.GreetServiceClient) {
 			}
 			fmt.Printf("Recived: %v", resp.GetResult())
 		}
-
 
 	}()
 	<-waitc

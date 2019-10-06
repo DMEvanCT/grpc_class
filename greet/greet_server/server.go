@@ -82,6 +82,7 @@ func (*server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
 			return stream.SendAndClose(&greetpb.LongGreetResp{
 				Result: result,
 			})
+
 		}
 		if err != nil {
 			log.Fatalf("Error reading stream %v",err )
@@ -90,6 +91,7 @@ func (*server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
 		firstName := req.GetGreeting().GetFirstName()
 		result += firstName + "!"
 	}
+	return nil
 }
 
 func (*server) GreatEveryone(stream greetpb.GreetService_GreetEveryoneServer) error {
@@ -99,6 +101,7 @@ func (*server) GreatEveryone(stream greetpb.GreetService_GreetEveryoneServer) er
 		req, err := stream.Recv()
 		if err == io.EOF {
 			return nil
+
 		}
 		if err != nil {
 			log.Fatalf("ERROR READING STREAM: %v", err)
