@@ -14,6 +14,36 @@ import (
 type server struct {
 }
 
+
+
+func (s *server) GreetEveryone( stream greetpb.GreetService_GreetEveryoneServer) error {
+	fmt.Println("Starting greet everyone stream")
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			log.Fatalf("Error while reading the stream: %v", err )
+			return err
+		}
+		firstName := req.GetGreeting().GetFirstName()
+		result := "Hello " + firstName + "! "
+		sendErr := stream.Send(&greetpb.GreetEveryoneResp{
+			Result:               result,
+			XXX_NoUnkeyedLiteral: struct{}{},
+			XXX_unrecognized:     nil,
+			XXX_sizecache:        0,
+		})
+		if sendErr != nil {
+			log.Fatalf("Error while sending the stream to client: %v", err )
+			return err
+
+		}
+	}
+}
+
+
 func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
 	first_name := req.GetGreeting().GetFirstName()
 	result := "Hello " + first_name
@@ -62,6 +92,30 @@ func (*server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
 	}
 }
 
+func (*server) GreatEveryone(stream greetpb.GreetService_GreetEveryoneServer) error {
+	fmt.Println("Invoking Greet Everyone")
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			log.Fatalf("ERROR READING STREAM: %v", err)
+			return err
+		}
+		firstName := req.GetGreeting().GetFirstName()
+		result := "Hello " + firstName + "! \n"
+		Senderr := stream.Send(&greetpb.GreetEveryoneResp{
+			Result: result,
+		})
+		if Senderr != nil {
+			log.Printf("ERROR SENDING RESULT: %V", err)
+			return  err
+		}
+	}
+}
+
 func main() {
 	fmt.Println("Hello World")
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
@@ -76,3 +130,4 @@ func main() {
 		log.Fatalf("Failed to serve %v", err)
 	}
 }
+

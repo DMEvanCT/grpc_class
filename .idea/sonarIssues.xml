@@ -33,6 +33,36 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../FileService/FileVisability/FileVis.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../FileService/FileVisability/GetFileFunc.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../FileService/GRPCInfo/server.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../FileService/cmd/main/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Kraken/FileVisability/FileService.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Kraken/FileVisability/FileVis.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/generate.sh">
           <value>
             <set />
